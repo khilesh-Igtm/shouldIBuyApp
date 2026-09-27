@@ -1,41 +1,317 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# WorkWorth - Development Instructions
 
-## Expo has changed — do not trust your training data
+## Project
 
-Expo ships breaking changes every SDK release. APIs you remember are likely renamed, moved, or removed. Before writing any code that touches an Expo, EAS, or React Native API:
+WorkWorth is a React Native mobile application built with Expo and TypeScript.
 
-1. Read the major version of the `expo` package in `package.json`.
-2. Fetch the matching versioned docs: `https://docs.expo.dev/versions/v<major>.0.0/`
-3. For anything else, fetch https://docs.expo.dev/llms.txt — an index of all Expo docs with corrections to common LLM misconceptions. Follow its links to the specific page you need; never answer from memory.
+The app converts the monetary price of a purchase into the amount of working time required to afford it.
 
-## Commands
+Core concept:
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
+"Don't just ask how much something costs.
+Ask how much of your working life it costs."
 
-```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
-```
+This is primarily a learning and portfolio project.
 
-Run lint and typecheck before declaring any task done.
+The goal is to demonstrate strong practical React Native skills through a polished mobile application.
 
-## Navigation & Routing
+---
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
-- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Docs: https://docs.expo.dev/router/introduction.md
+# Tech Stack
 
-## Building with EAS
+Use:
 
-Use EAS to build, sign, and submit the app in the cloud (`eas build`, `eas submit`) and to ship over-the-air updates (`eas update`) — no local Xcode or Android Studio required. Run EAS CLI as `bunx eas-cli <command>` in Bun projects, or `npx eas-cli@latest <command>` otherwise; substitute that for bare `eas` in docs examples.
-Docs: https://docs.expo.dev/eas/index.md
+- React Native
+- Expo
+- TypeScript
+- Expo Router
+- Zustand
+- React Native Reanimated
+- React Native Gesture Handler
+- AsyncStorage
+- React Native SVG when required
 
-## Rules
+Prefer Expo-compatible packages.
 
-- If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
-- Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
-- Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+Do not introduce a new dependency unless it provides a clear and meaningful benefit.
+
+---
+
+# Development Philosophy
+
+This project is being built to learn React Native properly.
+
+Prefer:
+
+- simple solutions
+- readable code
+- reusable components
+- clear separation of concerns
+- strong TypeScript typing
+- maintainable architecture
+
+Avoid:
+
+- unnecessary abstraction
+- overengineering
+- giant components
+- duplicated business logic
+- unnecessary dependencies
+
+---
+
+# Architecture
+
+Separate the application into:
+
+- screens/routes
+- reusable UI components
+- business logic
+- state management
+- utilities
+- types
+
+Business calculations must not be duplicated inside screen components.
+
+Create reusable utility functions for calculations.
+
+Keep global state limited to data that actually needs to be shared between screens.
+
+Use local React state for temporary UI state where appropriate.
+
+---
+
+# TypeScript
+
+Use TypeScript throughout the project.
+
+Rules:
+
+- Avoid `any`
+- Prefer explicit types for domain models
+- Avoid unnecessary type assertions
+- Create reusable interfaces/types
+- Keep types readable
+- Do not bypass TypeScript just to make code compile
+
+---
+
+# State Management
+
+Use Zustand for shared application state.
+
+Use local React state for:
+
+- temporary form values
+- input focus
+- temporary UI state
+- component-specific state
+
+Persist important user data locally using AsyncStorage.
+
+Do not put every state variable into Zustand.
+
+---
+
+# UI/UX
+
+The application should feel like a premium modern mobile application.
+
+Design direction:
+
+- dark-first
+- minimal
+- premium
+- typography-focused
+- strong visual hierarchy
+- generous spacing
+- subtle borders
+- elegant cards
+- restrained gradients
+- polished micro-interactions
+
+The application should NOT look like:
+
+- a beginner tutorial
+- a default Expo application
+- a generic dashboard
+- a basic calculator
+- a CRUD demo
+
+The central visual language is:
+
+MONEY → TIME
+
+The user should immediately understand:
+
+₹12,999
+
+=
+
+32 hours 39 minutes
+
+of work.
+
+---
+
+# Animation
+
+Use React Native Reanimated for important animations.
+
+Animations should be:
+
+- smooth
+- subtle
+- fast
+- purposeful
+
+Good examples:
+
+- number counting
+- progress ring
+- screen entrance
+- card entrance
+- button interaction
+- swipe-to-delete
+
+Avoid excessive animation.
+
+Do not sacrifice usability for visual effects.
+
+Prefer performant animations that avoid unnecessary JavaScript-thread work.
+
+---
+
+# Performance
+
+The application should run smoothly on mid-range Android devices.
+
+Pay attention to:
+
+- unnecessary re-renders
+- FlatList performance
+- animation performance
+- unnecessary calculations
+- excessive component nesting
+
+Do not prematurely optimize simple code.
+
+---
+
+# Responsive Design
+
+The application must work across different Android screen sizes.
+
+Do not design for only one device.
+
+Avoid unnecessary fixed widths and heights.
+
+Use safe-area handling where required.
+
+---
+
+# Accessibility
+
+Use:
+
+- readable text sizes
+- sufficient contrast
+- meaningful accessibility labels
+- reasonable touch target sizes
+
+Important actions should be understandable without relying only on icons.
+
+---
+
+# Dependencies
+
+Before installing a package:
+
+1. Check whether Expo already provides the required functionality.
+2. Check whether an existing installed dependency can solve the problem.
+3. Only then introduce a new package.
+
+Do not install multiple libraries that solve the same problem.
+
+---
+
+# Code Changes
+
+Before modifying existing code:
+
+1. Inspect the relevant files.
+2. Understand the existing implementation.
+3. Follow the architecture already established.
+4. Make the smallest clean change required.
+
+Do not rewrite working code unnecessarily.
+
+Do not modify unrelated files.
+
+---
+
+# Development Workflow
+
+Work incrementally.
+
+After each major feature:
+
+1. Keep the application runnable.
+2. Check for TypeScript errors.
+3. Check for obvious runtime issues.
+4. Explain what changed.
+5. Mention the important React Native concepts used.
+
+Do not implement the entire application in one giant change.
+
+---
+
+# AI Development Rules
+
+Before implementing a feature:
+
+1. Read this file.
+2. Read `docs/PRODUCT_SPEC.md`.
+3. Inspect the current project.
+4. Understand what has already been implemented.
+5. Implement only the requested phase.
+
+Do not assume a feature does not exist before inspecting the project.
+
+Do not recreate existing components.
+
+Do not generate duplicate utilities.
+
+If the specification and existing implementation conflict, explain the conflict before making a major architectural change.
+
+---
+
+# Learning Requirement
+
+This project is also a learning project.
+
+When implementing a significant feature, provide a concise explanation of:
+
+- what was implemented
+- which React Native concepts were used
+- which files changed
+- why the implementation was structured that way
+
+Do not provide unnecessary long explanations unless requested.
+
+---
+
+# Important
+
+Do not add:
+
+- backend
+- authentication
+- payments
+- cloud database
+- unnecessary APIs
+- unnecessary AI features
+
+Everything in the initial version should work locally.
+
+Follow `docs/PRODUCT_SPEC.md` as the product source of truth.
